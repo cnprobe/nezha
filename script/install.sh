@@ -2,20 +2,20 @@
 
 #========================================================
 #   System Required: CentOS 7+ / Debian 8+ / Ubuntu 16+ / Alpine 3+ /
-#     Arch 仅测试了一次，如有问题带截图反馈 dysf888@pm.me
+#     Arch 仅测试了一次, 如有问题带截图反馈 dysf888@pm.me
 #   Description: 哪吒监控安装脚本
-#   Github: https://github.com/naiba/nezha
+#   Github: https://github.com/cnprobe/nezha
 #========================================================
 
 # 兼容面板安装脚本
 # 仅支持管理哪吒面板 V1 兼容版 (非官方)
-# Github: https://github.com/chenx-dust/nezha-compat
+# Github: https://github.com/cnprobe/nezha
 
 NZ_BASE_PATH="/opt/nezha"
 NZ_DASHBOARD_PATH="${NZ_BASE_PATH}/dashboard"
 NZ_DASHBOARD_SERVICE="/etc/systemd/system/nezha-dashboard.service"
 NZ_DASHBOARD_SERVICERC="/etc/init.d/nezha-dashboard"
-NZ_VERSION="v0.20.3-compat.7"
+NZ_VERSION="v0.21.1"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -32,7 +32,7 @@ sudo() {
         if command -v sudo > /dev/null 2>&1; then
             command sudo "$@"
         else
-            err "错误: 您的系统未安装 sudo，因此无法进行该项操作。"
+            err "错误: 您的系统未安装 sudo, 因此无法进行该项操作。"
             exit 1
         fi
     else
@@ -77,10 +77,10 @@ pre_check() {
         os_arch="riscv64"
     fi
 
-    GITHUB_RAW_URL="raw.githubusercontent.com/chenx-dust/nezha-compat/compat"
+    GITHUB_RAW_URL="raw.githubusercontent.com/cnprobe/nezha/V0"
     Get_Docker_URL="get.docker.com"
     Get_Docker_Argu=" "
-    Docker_IMG="ghcr.io\/chenx-dust\/nezha-dashboard"
+    Docker_IMG="ghcr.io\/cnprobe\/nezha-dashboard"
 }
 
 installation_check() {
@@ -151,11 +151,11 @@ update_script() {
     curl -sL https://${GITHUB_RAW_URL}/script/install.sh -o /tmp/nezha.sh
     new_version=$(grep "NZ_VERSION" /tmp/nezha.sh | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
     if [ -z "$new_version" ]; then
-       echo "脚本获取失败，请检查本机能否链接 https://${GITHUB_RAW_URL}/script/install.sh"
+       echo "脚本获取失败, 请检查本机能否链接 https://${GITHUB_RAW_URL}/script/install.sh"
        return 1
     fi
     echo "当前最新版本为: ${new_version}"
-    curl -sL https://raw.githubusercontent.com/chenx-dust/nezha-compat/compat/script/install.sh -o /tmp/nezha.sh
+    curl -sL https://raw.githubusercontent.com/cnprobe/nezha/V0/script/install.sh -o /tmp/nezha.sh
     mv -f /tmp/nezha.sh ./nezha.sh && chmod a+x ./nezha.sh
 
     echo "3s后执行新脚本"
@@ -176,7 +176,7 @@ install_base() {
 }
 
 install_arch() {
-    info "提示：Arch安装libselinux需添加nezha-agent用户，安装完会自动删除，建议手动检查一次"
+    info "提示：Arch安装libselinux需添加nezha-agent用户, 安装完会自动删除, 建议手动检查一次"
     read -r -p "是否安装libselinux? [Y/n] " input
     case $input in
     [yY][eE][sS] | [yY])
@@ -187,7 +187,7 @@ install_arch() {
                                         git clone https://aur.archlinux.org/libselinux.git; cd libselinux; makepkg -si --noconfirm; cd ..;
                                         rm -rf libsepol libselinux'
         sed -i '/nezha-agent/d' /etc/sudoers && sleep 30s && killall -u nezha-agent && userdel -r nezha-agent
-        echo -e "${red}提示: ${plain}已删除用户nezha-agent，请务必手动核查一遍！\n"
+        echo -e "${red}提示: ${plain}已删除用户nezha-agent, 请务必手动核查一遍！\n"
         ;;
     [nN][oO] | [nN])
         echo "不安装libselinux"
@@ -217,7 +217,7 @@ install_dashboard() {
     if [ ! "$FRESH_INSTALL" = 0 ]; then
         sudo mkdir -p $NZ_DASHBOARD_PATH
     else
-        echo "您可能已经安装过面板端，重复安装会覆盖数据，请注意备份。"
+        echo "您可能已经安装过面板端, 重复安装会覆盖数据, 请注意备份。"
         printf "是否退出安装? [Y/n] "
         read -r input
         case $input in
@@ -252,7 +252,7 @@ install_dashboard_docker() {
             echo "正在安装 Docker"
             if [ "$os_alpine" != 1 ]; then
                 if ! curl -sL https://${Get_Docker_URL} | sudo bash -s "${Get_Docker_Argu}"; then
-                    err "下载脚本失败，请检查本机能否连接 ${Get_Docker_URL}"
+                    err "下载脚本失败, 请检查本机能否连接 ${Get_Docker_URL}"
                     return 0
                 fi
                 sudo systemctl enable docker.service
@@ -272,7 +272,7 @@ selinux() {
     #Check SELinux
     if command -v getenforce >/dev/null 2>&1; then
         if getenforce | grep '[Ee]nfor'; then
-            echo "SELinux是开启状态，正在关闭！"
+            echo "SELinux是开启状态, 正在关闭！"
             sudo setenforce 0 >/dev/null 2>&1
             find_key="SELINUX="
             sudo sed -ri "/^$find_key/c${find_key}disabled" /etc/selinux/config
@@ -288,7 +288,7 @@ modify_dashboard_config() {
             echo "正在下载 Docker 脚本"
             _cmd="wget -t 2 -T 60 -O /tmp/nezha-docker-compose.yaml https://${GITHUB_RAW_URL}/script/docker-compose.yaml >/dev/null 2>&1"
             if ! eval "$_cmd"; then
-                err "下载脚本失败，请检查本机能否连接 ${GITHUB_RAW_URL}"
+                err "下载脚本失败, 请检查本机能否连接 ${GITHUB_RAW_URL}"
                 return 0
             fi
         else
@@ -299,19 +299,19 @@ modify_dashboard_config() {
 
     _cmd="wget -t 2 -T 60 -O /tmp/nezha-config.yaml https://${GITHUB_RAW_URL}/script/config.yaml >/dev/null 2>&1"
     if ! eval "$_cmd"; then
-        err "下载脚本失败，请检查本机能否连接 ${GITHUB_RAW_URL}"
+        err "下载脚本失败, 请检查本机能否连接 ${GITHUB_RAW_URL}"
         return 0
     fi
 
-    echo "关于 GitHub Oauth2 应用：在 https://github.com/settings/developers 创建，无需审核，Callback 填 http(s)://域名或IP/oauth2/callback"
-    echo "关于 Gitee Oauth2 应用：在 https://gitee.com/oauth/applications 创建，无需审核，Callback 填 http(s)://域名或IP/oauth2/callback"
-    printf "请输入 OAuth2 提供商(github/gitlab/jihulab/gitee，默认 github): "
+    echo "关于 GitHub Oauth2 应用：在 https://github.com/settings/developers 创建, 无需审核, Callback 填 http(s)://域名或IP/oauth2/callback"
+    echo "关于 Gitee Oauth2 应用：在 https://gitee.com/oauth/applications 创建, 无需审核, Callback 填 http(s)://域名或IP/oauth2/callback"
+    printf "请输入 OAuth2 提供商(github/gitlab/jihulab/gitee, 默认 github): "
     read -r nz_oauth2_type
     printf "请输入 Oauth2 应用的 Client ID: "
     read -r nz_github_oauth_client_id
     printf "请输入 Oauth2 应用的 Client Secret: "
     read -r nz_github_oauth_client_secret
-    printf "请输入 GitHub/Gitee 登录名作为管理员，多个以逗号隔开: "
+    printf "请输入 GitHub/Gitee 登录名作为管理员, 多个以逗号隔开: "
     read -r nz_admin_logins
     printf "请输入站点标题: "
     read -r nz_site_title
@@ -362,20 +362,20 @@ modify_dashboard_config() {
         if [ "$os_alpine" != 1 ]; then
             _download="sudo wget -t 2 -T 60 -O $NZ_DASHBOARD_SERVICE https://${GITHUB_RAW_URL}/script/nezha-dashboard.service >/dev/null 2>&1"
             if ! eval "$_download"; then
-                err "文件下载失败，请检查本机能否连接 ${GITHUB_RAW_URL}"
+                err "文件下载失败, 请检查本机能否连接 ${GITHUB_RAW_URL}"
                 return 0
             fi
         else
             _download="sudo wget -t 2 -T 60 -O $NZ_DASHBOARD_SERVICERC https://${GITHUB_RAW_URL}/script/nezha-dashboard >/dev/null 2>&1"
             if ! eval "$_download"; then
-                err "文件下载失败，请检查本机能否连接 ${GITHUB_RAW_URL}"
+                err "文件下载失败, 请检查本机能否连接 ${GITHUB_RAW_URL}"
                 return 0
             fi
             sudo chmod +x $NZ_DASHBOARD_SERVICERC
         fi
     fi
 
-    success "面板配置 修改成功，请稍等重启生效"
+    success "面板配置 修改成功, 请稍等重启生效"
 
     restart_and_update
 
@@ -397,7 +397,7 @@ restart_and_update() {
         success "哪吒监控 重启成功"
         info "默认管理面板地址：域名:站点访问端口"
     else
-        err "重启失败，可能是因为启动时间超过了两秒，请稍后查看日志信息"
+        err "重启失败, 可能是因为启动时间超过了两秒, 请稍后查看日志信息"
     fi
 
     if [ $# = 0 ]; then
@@ -412,10 +412,10 @@ restart_and_update_docker() {
 }
 
 restart_and_update_standalone() {
-    _version=$(curl -m 10 -sL "https://api.github.com/repos/chenx-dust/nezha-compat/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+    _version=$(curl -m 10 -sL "https://api.github.com/repos/cnprobe/nezha/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
 
     if [ -z "$_version" ]; then
-        err "获取版本号失败，请检查本机能否链接 https://api.github.com/repos/chenx-dust/nezha-compat/releases/latest"
+        err "获取版本号失败, 请检查本机能否链接 https://api.github.com/repos/cnprobe/nezha/releases/latest"
         return 1
     else
         echo "当前最新版本为: ${_version}"
@@ -429,7 +429,7 @@ restart_and_update_standalone() {
     fi
 
 
-    NZ_DASHBOARD_URL="https://github.com/chenx-dust/nezha-compat/releases/download/${_version}/dashboard-linux-${os_arch}.zip"
+    NZ_DASHBOARD_URL="https://github.com/cnprobe/nezha/releases/download/${_version}/dashboard-linux-${os_arch}.zip"
 
 
     sudo wget -qO $NZ_DASHBOARD_PATH/app.zip "$NZ_DASHBOARD_URL" >/dev/null 2>&1 && sudo unzip -qq -o $NZ_DASHBOARD_PATH/app.zip -d $NZ_DASHBOARD_PATH && sudo mv $NZ_DASHBOARD_PATH/dashboard-linux-$os_arch $NZ_DASHBOARD_PATH/app && sudo rm $NZ_DASHBOARD_PATH/app.zip
@@ -456,7 +456,7 @@ start_dashboard() {
     if eval "$_cmd"; then
         success "哪吒监控 启动成功"
     else
-        err "启动失败，请稍后查看日志信息"
+        err "启动失败, 请稍后查看日志信息"
     fi
 
     if [ $# = 0 ]; then
@@ -488,7 +488,7 @@ stop_dashboard() {
     if eval "$_cmd"; then
         success "哪吒监控 停止成功"
     else
-        err "停止失败，请稍后查看日志信息"
+        err "停止失败, 请稍后查看日志信息"
     fi
 
     if [ $# = 0 ]; then
@@ -553,8 +553,7 @@ uninstall_dashboard() {
 uninstall_dashboard_docker() {
     sudo $DOCKER_COMPOSE_COMMAND -f ${NZ_DASHBOARD_PATH}/docker-compose.yaml down
     sudo rm -rf $NZ_DASHBOARD_PATH
-    sudo docker rmi -f ghcr.io/chenx-dust/nezha-dashboard >/dev/null 2>&1
-    sudo docker rmi -f registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard >/dev/null 2>&1
+    sudo docker rmi -f ghcr.io/cnprobe/nezha-dashboard >/dev/null 2>&1
 }
 
 uninstall_dashboard_standalone() {
@@ -585,7 +584,7 @@ install_custom_theme() {
     if [ $# -lt 1 ]; then
         printf "
 ${green}自定义主题安装${plain}
-${yellow}涉及静态文件地址替换，不保证替换后主题完全可用
+${yellow}涉及静态文件地址替换, 不保证替换后主题完全可用
 ———————————————————
 1. 安装 hamster1963/nezha-dash-v1 主题
 2. 安装 hi2shark/nazhua 主题
@@ -644,7 +643,7 @@ fetch_theme_version() {
     if [ -z "${THEME_VERSION}" ]; then
         THEME_VERSION=$(curl -m 10 -sL "https://api.github.com/repos/${CUSTOM_THEME}/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
         if [ -z "${THEME_VERSION}" ]; then
-            err "获取版本号失败，请检查本机能否链接 https://api.github.com/repos/${CUSTOM_THEME}/releases/latest"
+            err "获取版本号失败, 请检查本机能否链接 https://api.github.com/repos/${CUSTOM_THEME}/releases/latest"
             return 1
         fi
     fi
@@ -674,7 +673,7 @@ install_custom_theme_standalone() {
     wget -O ${TMP_DIR}/dist.zip "${NZ_DASH_URL}" >/dev/null 2>&1
     unzip -qq -o ${TMP_DIR}/dist.zip -d ${TMP_DIR}
     if [ $? -ne 0 ]; then
-        err "解压主题文件失败，请检查仓库地址是否正确"
+        err "解压主题文件失败, 请检查仓库地址是否正确"
         return 1
     fi
     # fix viewpassword.html
@@ -682,7 +681,7 @@ install_custom_theme_standalone() {
     sed -i "s|theme-default|theme-custom|g" ${TMP_DIR}/viewpassord.html
 
     if [ -d "${NZ_DASHBOARD_PATH}/resource/template/theme-custom" ] || [ -d "${NZ_DASHBOARD_PATH}/resource/static/custom" ]; then
-        echo "您可能已经安装过自定义主题，重复安装会覆盖现有主题，请注意备份。"
+        echo "您可能已经安装过自定义主题, 重复安装会覆盖现有主题, 请注意备份。"
         printf "是否继续? [Y/n] "
         read -r input
         case $input in
@@ -732,7 +731,7 @@ EOF
 
     echo
     success "${_repo} 主题安装成功"
-    info "为了更好的体验，建议打开设置中的 使用界面主题处理无路由情况"
+    info "为了更好的体验, 建议打开设置中的 使用界面主题处理无路由情况"
 }
 
 show_usage() {
@@ -757,7 +756,7 @@ show_menu() {
     printf "
     ${green}哪吒监控面板 V1 兼容版管理脚本${plain} ${red}${NZ_VERSION}${plain}
     ${yellow}!!! 本脚本仅支持管理哪吒面板 V1 兼容版 (非官方) !!! ${plain}
-    --- https://github.com/chenx-dust/nezha-compat ---
+    --- https://github.com/cnprobe/nezha ---
     ${green}1.${plain}  安装面板端
     ${green}2.${plain}  修改面板配置
     ${green}3.${plain}  启动面板

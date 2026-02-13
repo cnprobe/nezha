@@ -4,12 +4,12 @@
   <br>
   <small><i>LOGO designed by <a href="https://xio.ng" target="_blank">熊大</a> .</i></small>
   <br><br>
-<img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/chenx-dust/nezha-compat?color=brightgreen&style=for-the-badge&logo=github&label=Dashboard-Compat">
+<img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/cnprobe/nezha?color=brightgreen&style=for-the-badge&logo=github&label=Dashboard-Compat">
   <br>
   <br>
   <p>:trollface: <b>Nezha Dashboard Compat</b>: Based on V0, Provide V1 Dashboard API.</p>
   <p>:trollface: <b>哪吒面板兼容版</b>: 基于 V0 版本提供 V1 的面板 API 。</p>
-  <p>Forked from: <a href="https://github.com/nezhahq/nezha/tree/v0-final">nezhahq/nezha:v0-final</a></p>
+  <p>Forked from: <a href="https://github.com/cnprobe/nezha/tree/v0-final">cnprobe/nezha:v0-final</a></p>
 </div>
 
 ## Usage / 用法
@@ -19,7 +19,7 @@ Just like original Nezha Monitoring, to install or upgrade from original version
 和原版类似，要安装或者从原版中升级到兼容版：
 
 ```bash
-curl -L https://raw.githubusercontent.com/chenx-dust/nezha-compat/compat/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+curl -L https://raw.githubusercontent.com/cnprobe/nezha/V0/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 ```
 
 Then follow the prompt. *English version temporarily not provided.*
@@ -28,7 +28,7 @@ Then follow the prompt. *English version temporarily not provided.*
 
 ## Compatible API / 兼容 API
 
-所有已实现的 v1 API 在文件 [compat_v1.go](https://github.com/chenx-dust/nezha-compat/blob/compat/cmd/dashboard/controller/compat_v1.go) 中。目前支持了：
+所有已实现的 v1 API 在文件 [compat_v1.go](https://github.com/cnprobe/nezha/blob/compat/cmd/dashboard/controller/compat_v1.go) 中。目前支持了：
 
 - 前台界面的所有 API （包括 WebSocket）
 - 后台界面的部分只读 API
@@ -48,4 +48,5 @@ Then follow the prompt. *English version temporarily not provided.*
 
 ## Acknowledge / 致谢
 
-- [nezhahq/nezha](https://github.com/nezhahq/nezha): Original Nezha Dashboard. 原版哪吒面板。
+- [cnprobe/nezha](https://github.com/cnprobe/nezha): Original Nezha Dashboard. 原版哪吒面板。
+- [chenx-dust/nezha-compat](https://github.com/chenx-dust/nezha-compat): 哪吒面板的V1版本API实现

@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/mygin"
-	"github.com/naiba/nezha/pkg/utils"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/mygin"
+	"github.com/cnprobe/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 func (cv *compatV1) login(c *gin.Context) {

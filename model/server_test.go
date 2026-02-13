@@ -3,7 +3,7 @@ package model
 import (
 	"testing"
 
-	"github.com/naiba/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/pkg/utils"
 )
 
 func TestServerMarshal(t *testing.T) {

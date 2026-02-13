@@ -8,17 +8,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/naiba/nezha/pkg/ddns"
-	"github.com/naiba/nezha/pkg/geoip"
-	"github.com/naiba/nezha/pkg/grpcx"
-	"github.com/naiba/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/pkg/ddns"
+	"github.com/cnprobe/nezha/pkg/geoip"
+	"github.com/cnprobe/nezha/pkg/grpcx"
+	"github.com/cnprobe/nezha/pkg/utils"
 
 	"github.com/jinzhu/copier"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 
-	"github.com/naiba/nezha/model"
-	pb "github.com/naiba/nezha/proto"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	pb "github.com/cnprobe/nezha/proto"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 var NezhaHandlerSingleton *NezhaHandler

@@ -9,8 +9,8 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/utils"
 )
 
 var Version = "debug"

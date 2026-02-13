@@ -9,9 +9,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/utils"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 func (cv *compatV1) listServer(c *gin.Context) {

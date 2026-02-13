@@ -15,12 +15,12 @@ import (
 	"golang.org/x/net/idna"
 	"gorm.io/gorm"
 
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/mygin"
-	"github.com/naiba/nezha/pkg/utils"
-	"github.com/naiba/nezha/proto"
-	"github.com/naiba/nezha/resource"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/mygin"
+	"github.com/cnprobe/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/proto"
+	"github.com/cnprobe/nezha/resource"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 type memberAPI struct {

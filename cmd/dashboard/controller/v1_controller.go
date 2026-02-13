@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/mygin"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/mygin"
+	"github.com/cnprobe/nezha/service/singleton"
 	"golang.org/x/sync/singleflight"
 )
 

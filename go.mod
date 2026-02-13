@@ -1,4 +1,4 @@
-module github.com/naiba/nezha
+module github.com/cnprobe/nezha
 
 go 1.24
 
@@ -23,7 +23,7 @@ require (
 	github.com/libdns/cloudflare v0.1.3
 	github.com/libdns/libdns v0.2.3
 	github.com/miekg/dns v1.1.65
-	github.com/nezhahq/libdns-tencentcloud v0.0.0-20241029120103-889957240fff
+	github.com/cnprobe/libdns-tencentcloud v0.0.1
 	github.com/nicksnyder/go-i18n/v2 v2.6.0
 	github.com/ory/graceful v0.1.3
 	github.com/oschwald/maxminddb-golang v1.13.1

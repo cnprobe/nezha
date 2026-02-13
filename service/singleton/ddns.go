@@ -5,12 +5,12 @@ import (
 	"sync"
 
 	"github.com/libdns/cloudflare"
-	tencentcloud "github.com/nezhahq/libdns-tencentcloud"
+	tencentcloud "github.com/cnprobe/libdns-tencentcloud"
 
-	"github.com/naiba/nezha/model"
-	ddns2 "github.com/naiba/nezha/pkg/ddns"
-	"github.com/naiba/nezha/pkg/ddns/dummy"
-	"github.com/naiba/nezha/pkg/ddns/webhook"
+	"github.com/cnprobe/nezha/model"
+	ddns2 "github.com/cnprobe/nezha/pkg/ddns"
+	"github.com/cnprobe/nezha/pkg/ddns/dummy"
+	"github.com/cnprobe/nezha/pkg/ddns/webhook"
 )
 
 var (

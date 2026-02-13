@@ -6,10 +6,10 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/naiba/nezha/model"
-	pb "github.com/naiba/nezha/proto"
-	rpcService "github.com/naiba/nezha/service/rpc"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	pb "github.com/cnprobe/nezha/proto"
+	rpcService "github.com/cnprobe/nezha/service/rpc"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 func ServeRPC(port uint) {

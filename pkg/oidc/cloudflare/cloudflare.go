@@ -1,8 +1,8 @@
 package cloudflare
 
 import (
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 type UserInfo struct {

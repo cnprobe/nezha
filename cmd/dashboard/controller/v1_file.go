@@ -7,12 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/hashicorp/go-uuid"
-	"github.com/naiba/nezha/model"
-	"github.com/naiba/nezha/pkg/utils"
-	"github.com/naiba/nezha/pkg/websocketx"
-	"github.com/naiba/nezha/proto"
-	"github.com/naiba/nezha/service/rpc"
-	"github.com/naiba/nezha/service/singleton"
+	"github.com/cnprobe/nezha/model"
+	"github.com/cnprobe/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/pkg/websocketx"
+	"github.com/cnprobe/nezha/proto"
+	"github.com/cnprobe/nezha/service/rpc"
+	"github.com/cnprobe/nezha/service/singleton"
 )
 
 func (cv *compatV1) createFM(c *gin.Context) {

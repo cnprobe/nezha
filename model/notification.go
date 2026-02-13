@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/naiba/nezha/pkg/utils"
+	"github.com/cnprobe/nezha/pkg/utils"
 )
 
 const (

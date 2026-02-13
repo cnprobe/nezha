@@ -5,7 +5,7 @@ before:
 builds:
   - ldflags:
       - -s -w
-      - -X github.com/naiba/nezha/service/singleton.Version={{.Version}}
+      - -X github.com/cnprobe/nezha/service/singleton.Version={{.Version}}
       - -extldflags "-static -fpic"
     flags:
       - -trimpath
