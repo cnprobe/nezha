@@ -127,7 +127,7 @@ pre_check() {
         Docker_IMG="registry.cn-shanghai.aliyuncs.com\/cnprobe\/nezha-dashboard:${NZ_DASHBOARD_VERSION}"
     else
         if [ -z "$CN" ]; then
-            GITHUB_RAW_URL="raw.githubusercontent.com/cnprobe/nezha/v0"
+            GITHUB_RAW_URL="raw.githubusercontent.com/cnprobe/nezha/refs/heads/V0"
             GITHUB_URL="github.com"
             Get_Docker_URL="get.docker.com"
             Get_Docker_Argu=" "
@@ -472,7 +472,7 @@ modify_dashboard_config() {
     if [ "$IS_DOCKER_NEZHA" = 1 ]; then
         if [ -n "$DOCKER_COMPOSE_COMMAND" ]; then
             echo "正在下载 Docker 脚本"
-            _cmd="wget -t 2 -T 60 -O /tmp/nezha-docker-compose.yaml https://${GITHUB_RAW_URL}/extras/docker-compose.yaml >/dev/null 2>&1"
+            _cmd="wget -t 2 -T 60 -O /tmp/nezha-docker-compose.yaml https://${GITHUB_RAW_URL}/script/extras/docker-compose.yaml >/dev/null 2>&1"
             if ! eval "$_cmd"; then
                 err "脚本获取失败, 请检查本机能否链接  ${GITHUB_RAW_URL}"
                 return 0
@@ -483,7 +483,7 @@ modify_dashboard_config() {
         fi
     fi
 
-    _cmd="wget -t 2 -T 60 -O /tmp/nezha-config.yaml https://${GITHUB_RAW_URL}/extras/config.yaml >/dev/null 2>&1"
+    _cmd="wget -t 2 -T 60 -O /tmp/nezha-config.yaml https://${GITHUB_RAW_URL}/script/extras/config.yaml >/dev/null 2>&1"
     if ! eval "$_cmd"; then
         err "脚本获取失败, 请检查本机能否链接  ${GITHUB_RAW_URL}"
         return 0
