@@ -9,14 +9,14 @@
   <br>
   <p>:trollface: <b>Nezha Dashboard Compat</b>: Based on V0, Provide V1 Dashboard API.</p>
   <p>:trollface: <b>哪吒面板兼容版</b>: 基于 V0 版本提供 V1 的面板 API 。</p>
-  <p>Forked from: <a href="https://github.com/cnprobe/nezha/tree/v0-final">cnprobe/nezha:v0-final</a></p>
+  <p>Forked from: <a href="https://github.com/Nezhahq/nezha/tree/v0-final">Nezhahq/nezha:v0-final</a></p>
 </div>
 
 ## Usage / 用法
 
 Just like original Nezha Monitoring, to install or upgrade from original version:
 
-和原版类似，要安装或者从原版中升级到兼容版：
+和原版Nezhahq大佬以及和Chenx-dust大佬的项目内容类似，主要是调整了一些简单的代码内容，若各位作者认为内容有误或涉及侵权，请通过私信或邮件告知，感激不尽。
 
 ```bash
 curl -L https://raw.githubusercontent.com/cnprobe/nezha/V0/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
@@ -28,7 +28,7 @@ Then follow the prompt. *English version temporarily not provided.*
 
 ## Compatible API / 兼容 API
 
-所有已实现的 v1 API 在文件 [compat_v1.go](https://github.com/cnprobe/nezha/blob/compat/cmd/dashboard/controller/compat_v1.go) 中。目前支持了：
+所有已实现的 v1 API 在文件 [compat_v1.go](https://github.com/cnprobe/nezha/blob/V0/cmd/dashboard/controller/compat_v1.go) 中。目前支持了：
 
 - 前台界面的所有 API （包括 WebSocket）
 - 后台界面的部分只读 API
@@ -48,5 +48,5 @@ Then follow the prompt. *English version temporarily not provided.*
 
 ## Acknowledge / 致谢
 
-- [cnprobe/nezha](https://github.com/cnprobe/nezha): Original Nezha Dashboard. 原版哪吒面板。
+- [Nezhahq/nezha](https://github.com/Nezhahq/nezha): Original Nezha Dashboard. 原版哪吒面板。
 - [chenx-dust/nezha-compat](https://github.com/chenx-dust/nezha-compat): 哪吒面板的V1版本API实现
