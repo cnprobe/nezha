@@ -5,5 +5,7 @@ services:
     restart: always
     volumes:
       - ./data:/dashboard/data
+      - ./resource:/dashboard/resource:ro
     ports:
-      - nz_port:nz_port
+      - nz_site_port:80
+      - nz_grpc_port:nz_grpc_port

@@ -721,6 +721,44 @@ stop_dashboard_standalone() {
     fi
 }
 
+restart_dashboard_only() {
+    echo "> 仅重启面板（不更新）"
+
+    if [ "$IS_DOCKER_NEZHA" = 1 ]; then
+        _cmd="restart_dashboard_only_docker"
+    elif [ "$IS_DOCKER_NEZHA" = 0 ]; then
+        _cmd="restart_dashboard_only_standalone"
+    else
+        err "未检测到安装类型（Docker/独立），请先安装面板或运行 installation_check"
+        return 1
+    fi
+
+    if eval "$_cmd"; then
+        success "哪吒监控 面板重启成功（未更新）"
+    else
+        err "重启失败，请查看日志信息"
+    fi
+
+    if [ $# = 0 ]; then
+        before_show_menu
+    fi
+}
+
+restart_dashboard_only_docker() {
+    # 只重启容器，不 pull 不更换镜像
+    sudo $DOCKER_COMPOSE_COMMAND -f ${NZ_DASHBOARD_PATH}/docker-compose.yaml up -d
+}
+
+restart_dashboard_only_standalone() {
+    # 只重启 systemd 服务，不下载、不替换 app
+    if [ "$os_alpine" != 1 ]; then
+        sudo systemctl restart nezha-dashboard
+    else
+        sudo rc-service nezha-dashboard restart
+    fi
+}
+
+
 show_dashboard_log() {
     echo "> 获取 Dashboard 日志"
 
@@ -842,6 +880,7 @@ show_usage() {
     echo "./nezha.sh restart_and_update         - 重启并更新面板"
     echo "./nezha.sh show_dashboard_log         - 查看面板日志"
     echo "./nezha.sh uninstall_dashboard        - 卸载管理面板"
+    echo "./nezha.sh restart_dashboard_only     - 仅重启面板(不更新)"
     echo "--------------------------------------------------------"
     echo "./nezha.sh install_agent              - 安装监控Agent"
     echo "./nezha.sh modify_agent_config        - 修改Agent配置"
@@ -872,18 +911,19 @@ show_menu() {
     ${green}5.${plain}  重启并更新面板
     ${green}6.${plain}  查看面板日志
     ${green}7.${plain}  卸载管理面板
+    ${green}8.${plain}  仅重启面板(不更新)
     ————————————————-
-    ${green}8.${plain}  安装监控Agent
-    ${green}9.${plain}  修改Agent配置
-    ${green}10.${plain} 查看Agent日志
-    ${green}11.${plain} 卸载Agent
-    ${green}12.${plain} 重启Agent
+    ${green}9.${plain}  安装监控Agent
+    ${green}10.${plain}  修改Agent配置
+    ${green}11.${plain} 查看Agent日志
+    ${green}12.${plain} 卸载Agent
+    ${green}13.${plain} 重启Agent
     ————————————————-
-    ${green}13.${plain} 更新脚本
+    ${green}14.${plain} 更新脚本
     ————————————————-
     ${green}0.${plain}  退出脚本
     "
-    echo && printf "请输入选择 [0-13]: " && read -r num
+    echo && printf "请输入选择 [0-14]: " && read -r num
     case "${num}" in
         0)
             exit 0
@@ -910,25 +950,28 @@ show_menu() {
             uninstall_dashboard
             ;;
         8)
-            install_agent
+            restart_dashboard_only
             ;;
         9)
-            modify_agent_config
+            install_agent
             ;;
         10)
-            show_agent_log
+            modify_agent_config
             ;;
         11)
-            uninstall_agent
+            show_agent_log
             ;;
         12)
-            restart_agent
+            uninstall_agent
             ;;
         13)
+            restart_agent
+            ;;
+        14)
             update_script
             ;;
         *)
-            err "请输入正确的数字 [0-13]"
+            err "请输入正确的数字 [0-14]"
             ;;
     esac
 }
@@ -958,6 +1001,9 @@ if [ $# -gt 0 ]; then
             ;;
         "uninstall_dashboard")
             uninstall_dashboard 0
+            ;;
+        "restart_dashboard_only")
+            restart_dashboard_only 0
             ;;
         "install_agent")
             shift

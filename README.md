@@ -16,7 +16,7 @@
 
 Just like original Nezha Monitoring, to install or upgrade from original version:
 
-和原版Nezhahq大佬以及和Chenx-dust大佬的项目内容类似，主要是调整了一些简单的代码内容，若各位作者认为内容有误或涉及侵权，请通过私信或邮件告知，感激不尽。
+和原版Nezhahq大佬以及和Chenx-dust大佬的项目内容类似，主要是调整了一些简单的代码内容，若各位大佬认为内容有误或涉及侵权以及其他问题需要交流，可以通过私信或邮件告知，感激不尽.
 
 ```bash
 curl -L https://raw.githubusercontent.com/cnprobe/nezha/V0/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
