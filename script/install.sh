@@ -914,7 +914,7 @@ show_menu() {
     ${green}8.${plain}  仅重启面板(不更新)
     ————————————————-
     ${green}9.${plain}  安装监控Agent
-    ${green}10.${plain}  修改Agent配置
+    ${green}10.${plain} 修改Agent配置
     ${green}11.${plain} 查看Agent日志
     ${green}12.${plain} 卸载Agent
     ${green}13.${plain} 重启Agent
